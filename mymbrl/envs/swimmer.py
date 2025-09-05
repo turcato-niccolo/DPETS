@@ -16,7 +16,7 @@ class SwimmerEnv(MujocoEnv, utils.EzPickle):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         xml_path = os.path.join(dir_path, "assets", "swimmer.xml")
 
-        MujocoEnv.__init__(self, xml_path,  frame_skip=4, observation_space=None)
+        MujocoEnv.__init__(self, xml_path,  frame_skip=4, observation_space=None, render_mode=None)
 
 
         obs_dim = self.model.nq + self.model.nv
