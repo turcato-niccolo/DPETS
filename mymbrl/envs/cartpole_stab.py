@@ -12,7 +12,7 @@ from gymnasium import utils, spaces
 
 
 
-class CartpoleEnv(MujocoEnv, utils.EzPickle):
+class CartpoleStabEnv(MujocoEnv, utils.EzPickle):
     PENDULUM_LENGTH = 0.6
     MODEL_IN, MODEL_OUT = 6, 4
     OBS_ADD_DIM = 1
@@ -30,13 +30,13 @@ class CartpoleEnv(MujocoEnv, utils.EzPickle):
         high_act = np.ones(act_dim, dtype=np.float32)*3
         self.action_space = spaces.Box(-high_act, high_act, dtype=np.float32)
         
-        self.init_qpos = np.array([np.pi, 0.0])
+        self.init_qpos = np.array([0.0, 0.0])
 
     def step(self, a):
         self.do_simulation(a, self.frame_skip)
         ob = self._get_obs()
 
-        reward = -np.linalg.norm(self._get_ee_pos(ob) - np.array([0.0, CartpoleEnv.PENDULUM_LENGTH]))
+        reward = -np.linalg.norm(self._get_ee_pos(ob) - np.array([0.0, CartpoleStabEnv.PENDULUM_LENGTH]))
 
         done = False
         return ob, reward, done, {'reward': reward}
@@ -58,8 +58,8 @@ class CartpoleEnv(MujocoEnv, utils.EzPickle):
     def _get_ee_pos(x):
         x0, theta = x[0], x[1]
         return np.array([
-            x0 - CartpoleEnv.PENDULUM_LENGTH * np.sin(theta),
-            -CartpoleEnv.PENDULUM_LENGTH * np.cos(theta)
+            x0 - CartpoleStabEnv.PENDULUM_LENGTH * np.sin(theta),
+            -CartpoleStabEnv.PENDULUM_LENGTH * np.cos(theta)
         ])
 
     def viewer_setup(self):
@@ -71,11 +71,11 @@ class CartpoleEnv(MujocoEnv, utils.EzPickle):
     def obs_cost_fn_cost(obs):
         if isinstance(obs, np.ndarray):
             return -np.exp(-np.sum(
-                np.square(CartpoleEnv._get_ee_pos_cost(obs) - np.array([0.0, 0.6])), axis=1
+                np.square(CartpoleStabEnv._get_ee_pos_cost(obs) - np.array([0.0, 0.6])), axis=1
             ) / (0.6 ** 2))
         else:
             return -torch.exp(-torch.sum(
-                torch.square(CartpoleEnv._get_ee_pos_cost(obs) - torch.tensor([0.0, 0.6], device=obs.device)), dim=1
+                torch.square(CartpoleStabEnv._get_ee_pos_cost(obs) - torch.tensor([0.0, 0.6], device=obs.device)), dim=1
             ) / (0.6 ** 2))
 
     @staticmethod

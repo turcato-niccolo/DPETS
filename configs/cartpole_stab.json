@@ -1,5 +1,5 @@
 {
-    "env": "cartpole",
+    "env": "cartpole_stab",
     "agent": {
         "name": "dpets",
         "model": "cartpole_model",

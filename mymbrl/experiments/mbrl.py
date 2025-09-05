@@ -28,38 +28,42 @@ class MBRL:
             rewards = self.one_exp(i+1)
             print("epoch", i, "rewards", rewards.sum())
             self.writer.add_scalar('mbrl/rewards', rewards.sum(), i+1)
-    
-    def one_exp(self, epoch = 0, is_random = False):
+            
+    def one_exp(self, epoch=0, is_random=False):
 
         self.agent.set_epoch(epoch)
         self.agent.reset()
         if epoch > 0:
             self.agent.train()
 
-        cur_states = self.env.reset()
+        cur_states, info = self.env.reset()   # Gymnasium reset returns (obs, info)
         actions = []
         rewards = []
         states = [cur_states]
+
         for step in range(self.config.experiment.horizon):
             self.agent.set_step(step)
-            action = None
+
             if is_random:
                 action = self.env.action_space.sample()
             else:
                 action = self.agent.sample(cur_states)
-            next_state, reward, done, info= self.env.step(action)
-            
-            self.writer.add_scalar('mbrl/rewards/epoch'+str(epoch), reward, step)
-            
+
+            next_state, reward, done, info = self.env.step(action)
+
+            self.writer.add_scalar(f"mbrl/rewards/epoch{epoch}", reward, step)
+
             actions.append(action)
             states.append(next_state)
             rewards.append(reward)
-            
-            cur_states = next_state
 
-        states, actions, rewards = tuple(map(lambda l: np.stack(l, axis=0),
-                                            (states, actions, rewards)))
-        
+            cur_states = next_state
+            if done:   # stop if episode ends early
+                break
+
+        states = np.array(states, dtype=np.float32)
+        actions = np.array(actions, dtype=np.float32)
+        rewards = np.array(rewards, dtype=np.float32)
+
         self.agent.add_data(states, actions)
         return rewards
-        
