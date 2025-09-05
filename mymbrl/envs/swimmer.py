@@ -10,6 +10,10 @@ from gymnasium.envs.mujoco import MujocoEnv
 
 class SwimmerEnv(MujocoEnv, utils.EzPickle):
     MODEL_IN, MODEL_OUT = 12, 10  # you can adjust depending on your dynamics model input/output
+    metadata = {
+        "render_modes": ["human", "rgb_array", "depth_array"],
+        "render_fps": 20,
+    }
 
     def __init__(self):
         utils.EzPickle.__init__(self)
