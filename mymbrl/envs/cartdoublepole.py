@@ -13,6 +13,10 @@ class CartDoublePendulumEnv(MujocoEnv, utils.EzPickle):
     PENDULUM_LENGTH = [0.6, 0.6]   # length of each link
     MODEL_IN, MODEL_OUT = 9, 6     # positions + velocities
     OBS_ADD_DIM = 2                # because we’ll encode 2 angles (sin/cos)
+    metadata = {
+        "render_modes": ["human", "rgb_array", "depth_array"],
+        "render_fps": 50,
+    }
 
     def __init__(self):
         utils.EzPickle.__init__(self)
