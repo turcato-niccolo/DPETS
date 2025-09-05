@@ -12,7 +12,7 @@ class SwimmerEnv(MujocoEnv, utils.EzPickle):
     MODEL_IN, MODEL_OUT = 12, 10  # you can adjust depending on your dynamics model input/output
     metadata = {
         "render_modes": ["human", "rgb_array", "depth_array"],
-        "render_fps": 20,
+        "render_fps": 100,
     }
 
     def __init__(self):
@@ -20,7 +20,7 @@ class SwimmerEnv(MujocoEnv, utils.EzPickle):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         xml_path = os.path.join(dir_path, "assets", "swimmer.xml")
 
-        MujocoEnv.__init__(self, xml_path,  frame_skip=4, observation_space=None, render_mode=None)
+        MujocoEnv.__init__(self, xml_path,  frame_skip=1, observation_space=None, render_mode=None)
 
 
         obs_dim = self.model.nq + self.model.nv
