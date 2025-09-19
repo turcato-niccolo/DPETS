@@ -28,9 +28,9 @@
            'train_epoch': 10},
  'device': 'cuda',
  'env': 'cartpole_stab',
- 'experiment': {'horizon': 150,
+ 'experiment': {'horizon': 75,
                 'name': 'MBRL',
                 'ntrain_iters': 10,
                 'random_horizon': 150,
                 'random_ntrain_iters': 1},
- 'random_seed': 2}
+ 'random_seed': 8}

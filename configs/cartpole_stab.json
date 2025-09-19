@@ -13,7 +13,7 @@
     },
     "experiment": {
         "name": "MBRL",
-        "horizon": 150,
+        "horizon": 75,
         "random_horizon": 150,
         "ntrain_iters": 10
     },

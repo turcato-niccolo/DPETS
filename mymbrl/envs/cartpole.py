@@ -20,7 +20,7 @@ class CartpoleEnv(MujocoEnv, utils.EzPickle):
     def __init__(self):
         utils.EzPickle.__init__(self)
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        MujocoEnv.__init__(self, '%s/assets/cartpole.xml' % dir_path, frame_skip=2, observation_space=None)
+        MujocoEnv.__init__(self, '%s/assets/cartpole.xml' % dir_path, frame_skip=4, observation_space=None)
         obs_dim = self.model.nq + self.model.nv  # positions + velocities
         act_dim = self.model.nu
 

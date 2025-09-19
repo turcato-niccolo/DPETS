@@ -65,5 +65,7 @@ class MBRL:
         actions = np.array(actions, dtype=np.float32)
         rewards = np.array(rewards, dtype=np.float32)
 
+        np.savetxt("last_traj.np", states)
+        
         self.agent.add_data(states, actions)
         return rewards

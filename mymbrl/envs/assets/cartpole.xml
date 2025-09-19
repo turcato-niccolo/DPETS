@@ -15,7 +15,7 @@
         <material name='MatPlane' texture="texplane" shininess="1" texrepeat="30 30" specular="1"  reflectance="0.5" />
         <material name='geom' texture="texgeom" texuniform="true" />
  	</asset>
-	<option gravity="0 0 -9.81" integrator="RK4" timestep="0.02"/>
+	<option gravity="0 0 -9.81" integrator="RK4" timestep="0.01"/>
 	<size nstack="3000"/>
 	<worldbody>
 		<geom name="rail" pos="0 0 0" quat="0.707 0 0.707 0" rgba="0.3 0.3 0.7 1" size="0.02 3" type="capsule"/>
